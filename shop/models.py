@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Avg
 from django.contrib.auth.models import User
 from enum import Enum
 
@@ -15,6 +16,15 @@ class Product(models.Model):
   price = models.DecimalField(max_digits=6, decimal_places=2)
   category = models.CharField(max_length=20, choices=[(category.name, category.value) for category in ProductCategory])
   #image = models.ImageField(upload_to='products/', blank=True)
+
+  def get_average_review(self):
+    average = self.ratingproduct.aggregate(Avg('rating'))['rating__avg']
+    return average if average else 0
+  
+  def stars(self):
+    filled_stars = int(self.get_average_review())
+    stars = '★' * filled_stars + '☆' * (5 - filled_stars)
+    return stars
 
   def __str__(self):
     return self.title
