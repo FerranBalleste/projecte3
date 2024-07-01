@@ -4,5 +4,11 @@
   <p>{{ product.description }}</p>
   <p>€{{ product.price }}</p>
   <p>{{ product.stars }}</p>
-  <a href="#" class="add-to-cart">Add to Cart</a>
+  <div class="buttons">
+    <form action="{% url 'product_detail' product.id %}" method="post">
+      {% csrf_token %}
+      <button class="description" type="submit">Description</button>
+    </form>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
 </div>

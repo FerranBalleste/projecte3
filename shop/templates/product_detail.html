@@ -1,23 +1,26 @@
 {% extends 'base.html' %}
 
-{% block title %}Shop Homepage{% endblock %}
+{% block title %}
+  Shop Homepage
+{% endblock %}
 
 {% block content %}
-
-<div class="product-card">
-  <img src="{{ product.image.url }}" alt="{{ product.name }}">
-  <h3><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h3>
-  <p>{{ product.description }}</p>
-  <p>€{{ product.price }}</p>
-  <a href="#" class="add-to-cart">Add to Cart</a>
+  <div class="product-card">
+    <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+    <h3><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h3>
+    <p>{{ product.description }}</p>
+    <p>€{{ product.price }}</p>
+    <p>{{ product.stars }}</p>
+    <button href="#" class="add-to-cart">Add to Cart</button>
+  </div>
 
   {% if reviews %}
     <h4>Reviews</h4>
     <ul>
       {% for review in reviews %}
         <li>
-          <strong>Rating: {{ review.rating }}</strong><br>
-          {{ review.description }}<br>
+          <strong>Rating: {{ review.rating }}</strong><br />
+          {{ review.description }}<br />
           - {{ review.user.username }} ({{ review.created_at|timesince }})
         </li>
       {% endfor %}
@@ -25,6 +28,4 @@
   {% else %}
     <p>No reviews yet.</p>
   {% endif %}
-</div>
-
 {% endblock %}

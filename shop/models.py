@@ -57,7 +57,7 @@ class CartItem(models.Model):
   def get_total(self):
     return self.quantity * self.price_at_purchase
   
-  # On creation, save price
+  # On creation, save product price at that time
   def save(self, *args, **kwargs):
     if not self.pk:
       self.price_at_purchase = self.product.price
@@ -72,6 +72,7 @@ class Review(models.Model):
     description = models.TextField()
     product = models.ForeignKey(Product, related_name="ratingproduct", on_delete=models.CASCADE, blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.rating} ({self.user})"
